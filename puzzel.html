@@ -16,52 +16,110 @@
                 height: 100px;
                 width: 100px;
             }
+            #game-on, #select_image_div {
+                margin: 10px auto;
+                overflow: hidden;
+                width: 697px;
+            }
+            #game-on div {
+                text-align: center;
+            }
+            #select_image_div img {
+                height: 190px;
+                width: 190px;
+                float: left;
+                margin: 5px;
+                border: 1px solid #000;
+            }
+            #start-button {
+                color: green;
+                font-size: 20px;
+                font-weight: bold;
+                width: 140px;
+            }
+            #select_image_div h2 {
+                text-align: center;
+            }
             .pull-left {
                 float: left;
             }
             .change-game {
                 margin: 0px 15px;
             }
+            .change-game div h3 {
+                margin-bottom: 2px;
+            }
+            #show-current-level {
+                font-size: 35px;
+            }
         </style>
         <script type="text/javascript" src="jquery-2.1.1.js"></script>
         <script>
-            var gameLevel = 'easy', correctImageSeries, noOfBoxes, rowLen, imgDirName;
+            var imageDirArr = ['image1', 'image1'];
+            var gameLevel = 'easy', correctImageSeries, noOfBoxes, rowLen, imgDirName = 'image1';
 
             var assoc_td_1, assoc_td_2, assoc_td_3, assoc_td_4, assoc_td_5, assoc_td_6,
-                    assoc_td_7, assoc_td_8, assoc_td_9;
+                    assoc_td_7, assoc_td_8, assoc_td_9, assoc_td_10, assoc_td_11,
+                    assoc_td_12, assoc_td_13, assoc_td_14, assoc_td_15, assoc_td_16;
 
             // this will only be called if game level changed
             var setNoOfBoxes = function() {
                 switch (gameLevel) {
                     case 'easy':
                         noOfBoxes = 9;
-                        rowLen = 3
+                        rowLen = 3;
+                        break;
+                    case 'moderate':
+                        noOfBoxes = 16;
+                        rowLen = 4;
                         break;
                 }
             }
             // this will only be called if game level changed
             var createAssocTdList = function() {
-                if ('easy' == gameLevel) {
-                    correctImageSeries = 'img_1-img_2-img_3-img_4-img_5-img_6-img_7-img_8-undefined-';
+                switch (gameLevel) {
+                    case 'easy':
+                        correctImageSeries = 'img_1-img_2-img_3-img_4-img_5-img_6-img_7-img_8-undefined-';
 
-                    // create array of all associated td
-                    assoc_td_1 = ["td_2", "td_4"];
-                    assoc_td_2 = ["td_1", "td_3", "td_5"];
-                    assoc_td_3 = ["td_2", "td_6"];
-                    assoc_td_4 = ["td_1", "td_5", "td_7"];
-                    assoc_td_5 = ["td_2", "td_4", "td_6", "td_8"];
-                    assoc_td_6 = ["td_3", "td_5", "td_9"];
-                    assoc_td_7 = ["td_4", "td_8"];
-                    assoc_td_8 = ["td_7", "td_5", "td_9"];
-                    assoc_td_9 = ["td_6", "td_8"];
+                        // create array of all associated td
+                        assoc_td_1 = ["td_2", "td_4"];
+                        assoc_td_2 = ["td_1", "td_3", "td_5"];
+                        assoc_td_3 = ["td_2", "td_6"];
+                        assoc_td_4 = ["td_1", "td_5", "td_7"];
+                        assoc_td_5 = ["td_2", "td_4", "td_6", "td_8"];
+                        assoc_td_6 = ["td_3", "td_5", "td_9"];
+                        assoc_td_7 = ["td_4", "td_8"];
+                        assoc_td_8 = ["td_7", "td_5", "td_9"];
+                        assoc_td_9 = ["td_6", "td_8"];
+                        break;
+                    case 'moderate':
+                        correctImageSeries = 'img_1-img_2-img_3-img_4-img_5-img_6-img_7-img_8-img_9-img_10-img_11-img_12-img_13-img_14-img_15-undefined-';
+
+                        // create array of all associated td
+                        assoc_td_1 = ["td_2", "td_5"];
+                        assoc_td_2 = ["td_1", "td_3", "td_6"];
+                        assoc_td_3 = ["td_2", "td_4", "td_7"];
+                        assoc_td_4 = ["td_3", "td_8"];
+                        assoc_td_5 = ["td_1", "td_6", "td_9"];
+                        assoc_td_6 = ["td_2", "td_5", "td_7", "td_10"];
+                        assoc_td_7 = ["td_3", "td_6", "td_8", "td_11"];
+                        assoc_td_8 = ["td_4", "td_7", "td_12"];
+                        assoc_td_9 = ["td_5", "td_10", "td_13"];
+                        assoc_td_10 = ["td_6", "td_9", "td_11", "td_14"];
+                        assoc_td_11 = ["td_7", "td_10", "td_12", "td_15"];
+                        assoc_td_12 = ["td_8", "td_11", "td_16"];
+                        assoc_td_13 = ["td_9", "td_14"];
+                        assoc_td_14 = ["td_10", "td_13", "td_15"];
+                        assoc_td_15 = ["td_11", "td_14", "td_16"];
+                        assoc_td_16 = ["td_12", "td_15"];
+
+                        break;
                 }
             }
-
             var getBlankTdId = function() {
                 var blankTdId = $('.blank').attr('id');
                 return blankTdId;
             }
-
             var checkComplition = function() { //check all image position if completed
                 var currentSeries = '';
                 $('#gameTable tr td').each(function() {
@@ -69,15 +127,13 @@
                 });
 
                 if (currentSeries == correctImageSeries) {
-                    $("#td_" + noOfBoxes).html('<img id="img_' + noOfBoxes + '" src="media1/img9.jpeg" />');
+                    $("#td_" + noOfBoxes).html('<img id="img_' + noOfBoxes + '" src="media/'+imgDirName+'/'+noOfBoxes+'/img'+noOfBoxes+'.jpeg" />');
                     $("#" + getBlankTdId()).removeClass('blank');
                     $("#opMsg").html('Congratulation');
                 }
             }
-
-            var bGame;
             var bindGame = function() {
-                bGame = $("td").click(function(data) {
+                $("td").click(function(data) {
                     var currentTdId = $(data.currentTarget).attr('id');
                     var blankTdId = getBlankTdId();
 
@@ -91,13 +147,33 @@
                     }
                 });
             }
+            var arrange = function() {
+                var tableContent = '', boxCount = 0;
+
+                for (var i = 1; i <= rowLen; i++) {
+                    tableContent += '<tr>';
+                    for (var j = 1; j <= rowLen; j++) {
+                        boxCount++;
+
+                        if (boxCount == noOfBoxes) {
+                            tableContent += '<td id="td_' + boxCount + '" class="blank"></td>';
+                        } else {
+                            tableContent += '<td id="td_' + boxCount + '"> <img id="img_' + boxCount + '" src="media/'+imgDirName+'/'+noOfBoxes+'/img' + boxCount + '.jpeg" /></td>';
+                        }
+                    }
+                    tableContent += '</tr>';
+                }
+                $("#gameTable").html(tableContent);
+            }
+
+
+
 
             var randomize = function() {
                 var tableContent = '', boxCount = 0, imageNoArray = [], randImageNo;
 
                 for (var i = 1; i < noOfBoxes; i++) {
                     imageNoArray.push(i);
-
                 }
 
                 for (var i = 1; i <= rowLen; i++) {
@@ -105,63 +181,80 @@
                     for (var j = 1; j <= rowLen; j++) {
                         boxCount++;
 
-
                         if (boxCount == noOfBoxes) {
                             tableContent += '<td id="td_' + boxCount + '" class="blank"></td>';
                         } else {
                             randImageNo = imageNoArray[Math.floor(Math.random() * imageNoArray.length)];
                             imageNoArray.splice( $.inArray(randImageNo, imageNoArray), 1 );
 
-                            tableContent += '<td id="td_' + boxCount + '"> <img id="img_' + randImageNo + '" src="media1/img' + randImageNo + '.jpeg" /></td>';
+                            tableContent += '<td id="td_' + boxCount + '"> <img id="img_' + randImageNo + '" src="media/'+imgDirName+'/'+noOfBoxes+'/img' + randImageNo + '.jpeg" /></td>';
                         }
                     }
                     tableContent += '</tr>';
                 }
                 $("#gameTable").html(tableContent);
                 bindGame();
+                $("#start-button").hide();
+            }
+            var changeImage = function() {
+                if(confirm("Are you sure? You will loose the current progress.")) {
+                    $("#select_image_div").show();
+                    $("#game-on").hide();
+                }
+            }
+            var selectImage = function(dirName) {
+                imgDirName = dirName;
+                $("#orig-img").attr('src', 'media/'+imgDirName+'/orig.jpeg');
+                arrange();
+                $("#select_image_div").hide();
+                $("#game-on").show();
+                $("#start-button").show();
+            }
+            var changeLevel = function(level) {
+                if(confirm("Are you sure? You will loose the current progress.")) {
+                    gameLevel = level;
+
+                    $("#show-current-level").html(gameLevel);
+                    setNoOfBoxes();
+                    createAssocTdList();
+                    arrange();
+                    $("#start-button").show();
+                }
             }
 
             $(document).ready(function() {
                 $("#show-current-level").html(gameLevel);
-                $("#orig-img").attr('src', 'media1/orig.jpeg');
                 setNoOfBoxes();
                 createAssocTdList();
-                bindGame();
             });
         </script>
     </head>
     <body>
-        <div id="game-on">
+        <div id="select_image_div">
+            <h2>Click on image to play with</h2>
+            <img onclick="selectImage('image1');" src="media/image1/orig.jpeg" />
+            <img onclick="selectImage('image2');" src="media/image2/orig.jpeg" />
+        </div>
+        <div id="game-on" style="display: none;">
             <div class="pull-left">
-                <table id="gameTable">
-                    <tr>
-                        <td id="td_1"> <img id="img_1" src="media1/img1.jpeg" /></td>
-                        <td id="td_2"> <img id="img_2" src="media1/img2.jpeg" /></td>
-                        <td id="td_3"> <img id="img_3" src="media1/img3.jpeg" /></td>
-                    </tr>
-                    <tr>
-                        <td id="td_4"> <img id="img_4" src="media1/img4.jpeg" /></td>
-                        <td id="td_5"> <img id="img_5" src="media1/img5.jpeg" /></td>
-                        <td id="td_6"> <img id="img_6" src="media1/img6.jpeg" /></td>
-                    </tr>
-                    <tr>
-                        <td id="td_7"> <img id="img_7" src="media1/img7.jpeg" /></td>
-                        <td id="td_8"> <img id="img_8" src="media1/img8.jpeg" /></td>
-                        <td id="td_9" class="blank"></td>
-                    </tr>
-                </table>
+                <table id="gameTable"></table>
+                <button id="start-button" onclick="randomize();" >Start</button>
                 <div id="opMsg"></div>
             </div>
             <div class="change-game pull-left">
-                <h3>Current Level: <span id="show-current-level"></span></h3>
+                <h3>Level: <span id="show-current-level"></span></h3>
                 <div>
                     <h3>Original Image</h3>
                     <img id="orig-img" height="200" width="200" src="" />
                 </div>
-                <br><br>
-                <button onclick="randomize();" >Start</button>
-                <button >Change Level</button>
-                <button >Change Image</button>
+                <br>
+                <div style="margin-bottom: 20px">
+                    <label>Change Level</label><br>
+                    <button onclick="changeLevel('easy');">Easy</button>
+                    <button onclick="changeLevel('moderate');">Moderate</button>
+                </div>
+
+                <button onclick="changeImage();">Change Image</button>
             </div>
         </div>
     </body>

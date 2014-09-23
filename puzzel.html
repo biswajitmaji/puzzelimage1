@@ -1,0 +1,168 @@
+<html>
+    <head>
+        <style>
+            table {
+                border: 5px solid #000;
+            }
+            td {
+                border-top: 1px solid #555;
+                border-right: 1px solid #555;
+                padding: 0px;
+                height: 100px;
+                width: 100px;
+            }
+            td img {
+                border: none;
+                height: 100px;
+                width: 100px;
+            }
+            .pull-left {
+                float: left;
+            }
+            .change-game {
+                margin: 0px 15px;
+            }
+        </style>
+        <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script>
+            var gameLevel = 'easy', correctImageSeries, noOfBoxes, rowLen, imgDirName;
+
+            var assoc_td_1, assoc_td_2, assoc_td_3, assoc_td_4, assoc_td_5, assoc_td_6,
+                    assoc_td_7, assoc_td_8, assoc_td_9;
+
+            // this will only be called if game level changed
+            var setNoOfBoxes = function() {
+                switch (gameLevel) {
+                    case 'easy':
+                        noOfBoxes = 9;
+                        rowLen = 3
+                        break;
+                }
+            }
+            // this will only be called if game level changed
+            var createAssocTdList = function() {
+                if ('easy' == gameLevel) {
+                    correctImageSeries = 'img_1-img_2-img_3-img_4-img_5-img_6-img_7-img_8-undefined-';
+
+                    // create array of all associated td
+                    assoc_td_1 = ["td_2", "td_4"];
+                    assoc_td_2 = ["td_1", "td_3", "td_5"];
+                    assoc_td_3 = ["td_2", "td_6"];
+                    assoc_td_4 = ["td_1", "td_5", "td_7"];
+                    assoc_td_5 = ["td_2", "td_4", "td_6", "td_8"];
+                    assoc_td_6 = ["td_3", "td_5", "td_9"];
+                    assoc_td_7 = ["td_4", "td_8"];
+                    assoc_td_8 = ["td_7", "td_5", "td_9"];
+                    assoc_td_9 = ["td_6", "td_8"];
+                }
+            }
+
+            var getBlankTdId = function() {
+                var blankTdId = $('.blank').attr('id');
+                return blankTdId;
+            }
+
+            var checkComplition = function() { //check all image position if completed
+                var currentSeries = '';
+                $('#gameTable tr td').each(function() {
+                    currentSeries += $(this).find("img").attr('id') + '-';
+                });
+
+                if (currentSeries == correctImageSeries) {
+                    $("#td_" + noOfBoxes).html('<img id="img_' + noOfBoxes + '" src="media1/img9.jpeg" />');
+                    $("#" + getBlankTdId()).removeClass('blank');
+                    $("#opMsg").html('Congratulation');
+                }
+            }
+
+            var bGame;
+            var bindGame = function() {
+                bGame = $("td").click(function(data) {
+                    var currentTdId = $(data.currentTarget).attr('id');
+                    var blankTdId = getBlankTdId();
+
+                    if (-1 < $.inArray(blankTdId, eval("assoc_" + currentTdId))) {
+                        // move image
+                        $("#" + blankTdId).html($("#" + currentTdId).html());
+                        $("#" + currentTdId).html('');
+                        $("#" + blankTdId).removeClass('blank');
+                        $("#" + currentTdId).addClass('blank');
+                        checkComplition();
+                    }
+                });
+            }
+
+            var randomize = function() {
+                var tableContent = '', boxCount = 0, imageNoArray = [], randImageNo;
+
+                for (var i = 1; i < noOfBoxes; i++) {
+                    imageNoArray.push(i);
+
+                }
+
+                for (var i = 1; i <= rowLen; i++) {
+                    tableContent += '<tr>';
+                    for (var j = 1; j <= rowLen; j++) {
+                        boxCount++;
+
+
+                        if (boxCount == noOfBoxes) {
+                            tableContent += '<td id="td_' + boxCount + '" class="blank"></td>';
+                        } else {
+                            randImageNo = imageNoArray[Math.floor(Math.random() * imageNoArray.length)];
+                            imageNoArray.splice( $.inArray(randImageNo, imageNoArray), 1 );
+
+                            tableContent += '<td id="td_' + boxCount + '"> <img id="img_' + randImageNo + '" src="media1/img' + randImageNo + '.jpeg" /></td>';
+                        }
+                    }
+                    tableContent += '</tr>';
+                }
+                $("#gameTable").html(tableContent);
+                bindGame();
+            }
+
+            $(document).ready(function() {
+                $("#show-current-level").html(gameLevel);
+                $("#orig-img").attr('src', 'media1/orig.jpeg');
+                setNoOfBoxes();
+                createAssocTdList();
+                bindGame();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="game-on">
+            <div class="pull-left">
+                <table id="gameTable">
+                    <tr>
+                        <td id="td_1"> <img id="img_1" src="media1/img1.jpeg" /></td>
+                        <td id="td_2"> <img id="img_2" src="media1/img2.jpeg" /></td>
+                        <td id="td_3"> <img id="img_3" src="media1/img3.jpeg" /></td>
+                    </tr>
+                    <tr>
+                        <td id="td_4"> <img id="img_4" src="media1/img4.jpeg" /></td>
+                        <td id="td_5"> <img id="img_5" src="media1/img5.jpeg" /></td>
+                        <td id="td_6"> <img id="img_6" src="media1/img6.jpeg" /></td>
+                    </tr>
+                    <tr>
+                        <td id="td_7"> <img id="img_7" src="media1/img7.jpeg" /></td>
+                        <td id="td_8"> <img id="img_8" src="media1/img8.jpeg" /></td>
+                        <td id="td_9" class="blank"></td>
+                    </tr>
+                </table>
+                <div id="opMsg"></div>
+            </div>
+            <div class="change-game pull-left">
+                <h3>Current Level: <span id="show-current-level"></span></h3>
+                <div>
+                    <h3>Original Image</h3>
+                    <img id="orig-img" height="200" width="200" src="" />
+                </div>
+                <br><br>
+                <button onclick="randomize();" >Start</button>
+                <button >Change Level</button>
+                <button >Change Image</button>
+            </div>
+        </div>
+    </body>
+</html>

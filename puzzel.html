@@ -35,7 +35,7 @@
                 border: 1px solid #000;
             }
             #start-button {
-                color: #0f0;
+                color: #080;
                 font-size: 20px;
                 font-weight: bold;
                 width: 140px;
@@ -59,22 +59,27 @@
                 margin-bottom: 2px;
             }
             #show-current-level {
-                font-size: 35px;
+                font-size: 30px;
+                color: #161;
+                text-transform: uppercase;
             }
             #opMsg {
                 position: relative;
-                /*top: 200px;*/
                 z-index: 2;
             }
             #opMsg img{
-                width: 200px;
+                width: 280px;
                 height: 90px;
             }
             #gameTable {
                 position: relative;
             }
+            #timer {
+                font-size: 45px;
+            }
         </style>
         <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="timer.js"></script>
         <script>
             var imageDirArr = ['image1', 'image1'];
             var gameLevel = 'easy', correctImageSeries, noOfBoxes, rowLen, imgDirName = 'image1';
@@ -150,6 +155,7 @@
                 if (currentSeries == correctImageSeries) {
                     $("#td_" + noOfBoxes).html('<img id="img_' + noOfBoxes + '" src="media/'+imgDirName+'/'+noOfBoxes+'/img'+noOfBoxes+'.jpeg" />');
                     $("#" + getBlankTdId()).removeClass('blank');
+                    stopTimer();
                     $("#opMsg").show();
                 }
             }
@@ -167,6 +173,7 @@
                         checkComplition();
                     }
                 });
+                startTimer();
             }
             var arrange = function() {
                 var tableContent = '', boxCount = 0;
@@ -208,6 +215,7 @@ console.log(blankTdId);
             }
             var changeImage = function() {
                 if(confirm("Are you sure? You will loose the current progress.")) {
+                    resetTimer();
                     $("#select_image_div").show();
                     $("#game-on").hide();
                 }
@@ -221,8 +229,12 @@ console.log(blankTdId);
                 $("#game-on").show();
                 $("#start-button").show();
             }
-            var changeLevel = function(level) {
+            var changeLevel = function(level, elem) {
                 if(confirm("Are you sure? You will loose the current progress.")) {
+                    resetTimer();
+                    $(".change-game button").show();
+                    $(elem).hide();
+
                     $("#opMsg").hide();
                     gameLevel = level;
                     $("#show-current-level").html(gameLevel);
@@ -234,6 +246,7 @@ console.log(blankTdId);
             }
 
             $(document).ready(function() {
+                $("#btn-easy").hide();
                 $("#show-current-level").html(gameLevel);
                 setNoOfBoxes();
                 createAssocTdList();
@@ -254,15 +267,15 @@ console.log(blankTdId);
             </div>
             <div class="change-game pull-left">
                 <h3>Level: <span id="show-current-level"></span></h3>
+                <div id="timer" >00:00:00</div>
                 <div>
-                    <h3>Original Image</h3>
                     <img id="orig-img" height="200" width="200" src="" />
                 </div>
                 <br>
                 <div style="margin-bottom: 20px">
-                    <label>Change Level</label><br>
-                    <button onclick="changeLevel('easy');">Easy</button>
-                    <button onclick="changeLevel('moderate');">Moderate</button>
+                    <label>Change Level To: </label>
+                    <button id="btn-easy" onclick="changeLevel('easy', this);">Easy</button>
+                    <button onclick="changeLevel('moderate', this);">Moderate</button>
                 </div>
 
                 <button id="ch-img-button" onclick="changeImage();">Change Image</button>

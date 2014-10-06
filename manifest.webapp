@@ -1,13 +1,15 @@
 {
+  "version": "0.1",
   "name": "Piczzel",
-  "description": "Solve the puzzel to get the image",
+  "description": "Solve the puzzel to make the image",
   "launch_path": "/puzzel.html",
   "icons": {
     "128": "/img/icon.png",
     "512": "/img/icon.png"
   },
+  "orientation": "portrait",
   "developer": {
-    "name": "Biswajit Maji",
+    "name": "Biswajit Maji and Sadasivine Sweta",
     "url": ""
   },
   "default_locale": "en"

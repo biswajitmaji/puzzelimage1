@@ -11,25 +11,25 @@
                 border-top: 1px solid #555;
                 border-right: 1px solid #555;
                 padding: 0px;
-                height: 100px;
-                width: 100px;
+/*                height: 100px;
+                width: 100px;*/
             }
             td img {
                 border: none;
-                height: 100px;
-                width: 100px;
+                height: 60px;
+                width: 60px;
             }
             #game-on, #select_image_div {
                 margin: 10px auto;
                 overflow: hidden;
-                width: 697px;
+                width: 100%;
             }
             #game-on div {
                 text-align: center;
             }
             #select_image_div img {
-                height: 190px;
-                width: 190px;
+                height: 100px;
+                width: 100px;
                 float: left;
                 margin: 5px;
                 border: 1px solid #000;
@@ -45,6 +45,7 @@
                 font-size: 15px;
                 font-weight: bold;
                 width: 140px;
+                margin-top: 5px;
             }
             #select_image_div h2 {
                 text-align: center;
@@ -53,13 +54,14 @@
                 float: left;
             }
             .change-game {
-                margin: 0px 15px;
+                margin: 0px;
             }
-            .change-game div h3 {
+            .change-game div h5 {
+                margin-top: 2px;
                 margin-bottom: 2px;
             }
             #show-current-level {
-                font-size: 30px;
+                font-size: 20px;
                 color: #161;
                 text-transform: uppercase;
             }
@@ -68,14 +70,19 @@
                 z-index: 2;
             }
             #opMsg img{
-                width: 280px;
+                width: 260px;
                 height: 90px;
             }
             #gameTable {
                 position: relative;
             }
             #timer {
-                font-size: 45px;
+                font-size: 25px;
+            }
+            .ref-img {
+                margin-top: 5px;
+                margin-right: 5px;
+                border: 1px solid #555;
             }
         </style>
         <script type="text/javascript" src="jquery-2.1.1.js"></script>
@@ -266,18 +273,19 @@ console.log(blankTdId);
                 <button id="start-button" onclick="randomize();" >Start</button>
             </div>
             <div class="change-game pull-left">
-                <h3>Level: <span id="show-current-level"></span></h3>
-                <div id="timer" >00:00:00</div>
-                <div>
-                    <img id="orig-img" height="200" width="200" src="" />
+                <div class="pull-left ref-img">
+                    <img id="orig-img" height="120" width="120" src="" />
                 </div>
-                <br>
-                <div style="margin-bottom: 20px">
-                    <label>Change Level To: </label>
+                <div class="pull-left">
+                    <br>
+                    <h5>Level: <span id="show-current-level"></span></h5>
+                    <div id="timer" >00:00:00</div>
+                    <br>
+                    <label>Change Level To: </label><br>
                     <button id="btn-easy" onclick="changeLevel('easy', this);">Easy</button>
                     <button onclick="changeLevel('moderate', this);">Moderate</button>
                 </div>
-
+                <br>
                 <button id="ch-img-button" onclick="changeImage();">Change Image</button>
             </div>
         </div>

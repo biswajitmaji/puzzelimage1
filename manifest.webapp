@@ -3,8 +3,8 @@
   "description": "Solve the puzzel to get the image",
   "launch_path": "/puzzel.html",
   "icons": {
-    "512": "/img/icon-512.png",
-    "128": "/img/icon-128.png"
+    "128": "/img/icon.png",
+    "512": "/img/icon.png"
   },
   "developer": {
     "name": "Biswajit Maji",

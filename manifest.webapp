@@ -4,13 +4,12 @@
   "description": "Click on the block to move it to the blank space in order to solve the puzzel to make the image",
   "launch_path": "/puzzel.html",
   "icons": {
-    "128": "/img/icon.png",
-    "512": "/img/icon.png"
+    "128": "/img/icon-128.png",
+    "512": "/img/icon-512.png"
   },
   "orientation": "portrait",
   "developer": {
-    "name": "Biswajit Maji & Sadasivine Sweta",
-    "url": ""
+    "name": "Biswajit Maji & Sadasivine Sweta"
   },
   "default_locale": "en"
 }

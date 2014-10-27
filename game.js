@@ -110,11 +110,18 @@ var arrange = function() {
     }
     $("#gameTable").html(tableContent);
 }
+var setGameImageStyle = function() {
+    if('easy' == gameLevel) {
+        $( "td img" ).css( "max-width", "116px" );
+    } else {
+        $( "td img" ).css( "max-width", "87px" );
+    }
+}
 
 var randomize = function() {
     $("#opMsg").hide();
     var blankTdId, randImageNo, assocArr;
-    for (var i = 0; i < 50; i++) { // random move 50 times
+    for (var i = 0; i < 51; i++) { // random move 51 times
         setTimeout(function() {
             blankTdId = getBlankTdId();
             assocArr = eval("assoc_" + blankTdId);
@@ -128,7 +135,7 @@ var randomize = function() {
     $("#start-button").hide();
 }
 var changeImage = function() {
-    if (confirm("Are you sure? You will loose the current progress.")) {
+    if (confirm("Are you sure? You will loose all the current progress.")) {
         resetTimer();
         $("#select_image_div").show();
         $("#game-on").hide();
@@ -139,12 +146,13 @@ var selectImage = function(dirName) {
     imgDirName = dirName;
     $("#orig-img").attr('src', 'media/' + imgDirName + '/orig.jpeg');
     arrange();
+    setGameImageStyle();
     $("#select_image_div").hide();
     $("#game-on").show();
     $("#start-button").show();
 }
 var changeLevel = function(level, elem) {
-    if (confirm("Are you sure? You will loose the current progress.")) {
+    if (confirm("Are you sure? You will loose all the current progress.")) {
         resetTimer();
         $(".change-game button").show();
         $(elem).hide();
@@ -155,6 +163,7 @@ var changeLevel = function(level, elem) {
         setNoOfBoxes();
         createAssocTdList();
         arrange();
+        setGameImageStyle();
         $("#start-button").show();
     }
 }
@@ -164,4 +173,20 @@ $(document).ready(function() {
     $("#show-current-level").html(gameLevel);
     setNoOfBoxes();
     createAssocTdList();
+
+    $("#ch-img-button").click(function() {
+        changeImage();
+    });
+    $("#btn-easy").click(function(event) {
+        changeLevel('easy', event.target);
+    });
+    $("#btn-moderate").click(function(event) {
+        changeLevel('moderate', event.target);
+    });
+    $("#start-button").click(function() {
+        randomize();
+    });
+    $("#display-imgs img").click(function(event) {
+        selectImage(event.target.id);
+    });
 });

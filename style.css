@@ -11,8 +11,10 @@ td {
 }
 td img {
     border: none;
-    height: 60px;
-    width: 60px;
+    height: 100%;
+    width:100%;
+    /*max-height: 135px;*/
+    max-width: 116px;
 }
 #game-on, #select_image_div {
     margin: 10px auto;
@@ -22,12 +24,11 @@ td img {
 #game-on div {
     text-align: center;
 }
-#select_image_div img {
-    height: 100px;
-    width: 100px;
-    float: left;
-    margin: 5px;
-    border: 1px solid #000;
+#display-imgs img {
+    height: auto;
+    max-height: 260px;
+    max-width: 260px;
+    width: 45%;
 }
 #start-button {
     color: #080;
@@ -42,7 +43,7 @@ td img {
     width: 140px;
     margin-top: 5px;
 }
-#select_image_div h2 {
+#select_image_div h2, #select_image_div div {
     text-align: center;
 }
 .pull-left {
@@ -70,6 +71,7 @@ td img {
 }
 #gameTable {
     position: relative;
+    margin: 0 5%;
 }
 #timer {
     font-size: 25px;
@@ -79,4 +81,13 @@ td img {
     margin-right: 5px;
     margin-left: 2px;
     border: 1px solid #555;
+}
+
+@media (min-width: 710px) {
+    body {
+        text-align: center;
+    }
+    #game-on {
+        width: 700px;
+    }
 }

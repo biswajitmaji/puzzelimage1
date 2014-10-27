@@ -8,14 +8,17 @@
     <body>
         <div id="select_image_div">
             <h2>Click on image to play with</h2>
-            <img onclick="selectImage('image1');" src="media/image1/orig.jpeg" />
-            <img onclick="selectImage('image2');" src="media/image2/orig.jpeg" />
+            <div id="display-imgs">
+                <img id="image1" src="media/image1/orig.jpeg" />
+                <img id="image2" src="media/image2/orig.jpeg" />
+                <img id="image3" src="media/image3/orig.jpeg" />
+            </div>
         </div>
         <div id="game-on" style="display: none;">
             <div class="pull-left">
                 <table id="gameTable"></table>
                 <div id="opMsg" style="display: none;"><img src="media/congo.jpeg" /></div>
-                <button id="start-button" onclick="randomize();" >Start</button>
+                <button id="start-button" >Start</button>
             </div>
             <div class="change-game pull-left">
                 <div class="pull-left ref-img">
@@ -27,11 +30,11 @@
                     <div id="timer" >00:00:00</div>
                     <br>
                     <label>Change Level To: </label><br>
-                    <button id="btn-easy" onclick="changeLevel('easy', this);">Easy</button>
-                    <button onclick="changeLevel('moderate', this);">Moderate</button>
+                    <button id="btn-easy">Easy</button>
+                    <button id="btn-moderate">Moderate</button>
+                    <br>
+                    <button id="ch-img-button">Change Image</button>
                 </div>
-                <br>
-                <button id="ch-img-button" onclick="changeImage();">Change Image</button>
             </div>
         </div>
     </body>

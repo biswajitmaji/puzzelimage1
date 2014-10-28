@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "name": "Piczzel",
   "description": "Click on the block to move it to the blank space in order to solve the puzzel to make the image",
   "launch_path": "/puzzel.html",

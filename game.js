@@ -1,4 +1,3 @@
-var imageDirArr = ['image1', 'image1'];
 var gameLevel = 'easy', correctImageSeries, noOfBoxes, rowLen, imgDirName = 'image1';
 
 var assoc_td_1, assoc_td_2, assoc_td_3, assoc_td_4, assoc_td_5, assoc_td_6,
@@ -72,6 +71,7 @@ var checkComplition = function() { //check all image position if completed
     if (currentSeries == correctImageSeries) {
         $("#td_" + noOfBoxes).html('<img id="img_' + noOfBoxes + '" src="media/' + imgDirName + '/' + noOfBoxes + '/img' + noOfBoxes + '.jpeg" />');
         $("#" + getBlankTdId()).removeClass('blank');
+        setGameImageStyle();
         stopTimer();
         $("#opMsg").show();
     }
